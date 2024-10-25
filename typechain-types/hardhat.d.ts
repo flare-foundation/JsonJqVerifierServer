@@ -14,26 +14,26 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
-      name: "IAddressValidityTemporary",
+      name: "IJsonApiTemporary",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IAddressValidityTemporary__factory>;
+    ): Promise<Contracts.IJsonApiTemporary__factory>;
 
     getContractAt(
-      name: "IAddressValidityTemporary",
+      name: "IJsonApiTemporary",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
-    ): Promise<Contracts.IAddressValidityTemporary>;
+    ): Promise<Contracts.IJsonApiTemporary>;
 
     deployContract(
-      name: "IAddressValidityTemporary",
+      name: "IJsonApiTemporary",
       signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IAddressValidityTemporary>;
+    ): Promise<Contracts.IJsonApiTemporary>;
 
     deployContract(
-      name: "IAddressValidityTemporary",
+      name: "IJsonApiTemporary",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IAddressValidityTemporary>;
+    ): Promise<Contracts.IJsonApiTemporary>;
 
     // default types
     getContractFactory(

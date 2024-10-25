@@ -36,7 +36,7 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 # dotenv environment variable files
-.env
+# .env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -56,8 +56,8 @@ pids
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 
-/artifacts
-/cache
-/generated
-/server
-/typechain-types
+# /artifacts
+# /cache
+# /generated
+# /server
+# /typechain-types
