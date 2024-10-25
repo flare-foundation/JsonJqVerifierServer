@@ -10,15 +10,15 @@ import {
   BaseVerifierService,
   IVerificationServiceConfig,
 } from 'src/services/common/verifier-base.service';
+import { Web3 } from 'web3';
 import { AttestationResponse } from '../../src/dtos/generic/generic.dto';
-import {Web3} from 'web3';
 
 @Injectable()
 export class IJsonApiVerifierService extends BaseVerifierService<
   IJsonApi_Request,
   IJsonApi_Response
 > {
-    constructor(protected configService: ConfigService<IConfig>) {
+  constructor(protected configService: ConfigService<IConfig>) {
     const config: IVerificationServiceConfig = {
       source: 'WEB2', //CONFIGURE THIS
       attestationName: "JsonApi",
@@ -71,8 +71,8 @@ export class IJsonApiVerifierService extends BaseVerifierService<
     const attResponseParams: Required<IJsonApi_Response> = {
       attestationType: fixedRequest.attestationType,
       sourceId: fixedRequest.sourceId,
-      votingRound: "1", // TODO
-      lowestUsedTimestamp: "1", // TODO
+      votingRound: "1234", // We are mocking this value, so it doesn't matter
+      lowestUsedTimestamp: "0", // Irrelevant for this attestation type
       requestBody: fixedRequest.requestBody,
       responseBody: responseBodyObj,
     }
