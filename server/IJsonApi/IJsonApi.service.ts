@@ -11,7 +11,10 @@ import {
   IVerificationServiceConfig,
 } from 'src/services/common/verifier-base.service';
 import { Web3 } from 'web3';
-import { AttestationResponse } from '../../src/dtos/generic/generic.dto';
+import {
+  AttestationResponse,
+  AttestationResponseStatus,
+} from '../../src/dtos/generic/generic.dto';
 
 @Injectable()
 export class IJsonApiVerifierService extends BaseVerifierService<
@@ -21,7 +24,7 @@ export class IJsonApiVerifierService extends BaseVerifierService<
   constructor(protected configService: ConfigService<IConfig>) {
     const config: IVerificationServiceConfig = {
       source: 'WEB2', //CONFIGURE THIS
-      attestationName: "JsonApi",
+      attestationName: 'JsonApi',
     };
     super(configService, config);
   }
@@ -29,31 +32,41 @@ export class IJsonApiVerifierService extends BaseVerifierService<
   protected async verifyRequest(
     fixedRequest: IJsonApi_Request,
   ): Promise<AttestationResponse<IJsonApi_Response>> {
-    const axios = require("axios");
-    const jq = require("node-jq");
+    const axios = require('axios');
+    const jq = require('node-jq');
 
     const url = fixedRequest.requestBody.url;
     const jqScheme = fixedRequest.requestBody.postprocessJq;
     const abiSign = JSON.parse(fixedRequest.requestBody.abi_signature);
 
-
     let responseData;
     let dataJq;
 
+    const result = new AttestationResponse<IJsonApi_Response>();
 
     // axios get data
-    await axios.get(url).then(response => {
-      responseData = response["data"];
-      console.log(responseData);
-    }).catch(error => {
-      console.error(error);
-    })
-    // jq transform 
-    await jq.run(jqScheme, responseData, { input: 'json' }).then(output => {
-      dataJq = JSON.parse(output);
-    }).catch(error => {
-      console.error(error);
-    })
+    await axios
+      .get(url)
+      .then((response) => {
+        responseData = response['data'];
+        console.log(responseData);
+      })
+      .catch((error) => {
+        console.error(error);
+        result.status = AttestationResponseStatus.INVALID;
+        return result;
+      });
+    // jq transform
+    await jq
+      .run(jqScheme, responseData, { input: 'json' })
+      .then((output) => {
+        dataJq = JSON.parse(output);
+      })
+      .catch((error) => {
+        console.error(error);
+        result.status = AttestationResponseStatus.INVALID;
+        return result;
+      });
 
     console.log(abiSign);
     console.log(dataJq);
@@ -71,17 +84,16 @@ export class IJsonApiVerifierService extends BaseVerifierService<
     const attResponseParams: Required<IJsonApi_Response> = {
       attestationType: fixedRequest.attestationType,
       sourceId: fixedRequest.sourceId,
-      votingRound: "1234", // We are mocking this value, so it doesn't matter
-      lowestUsedTimestamp: "0", // Irrelevant for this attestation type
+      votingRound: '0',
+      lowestUsedTimestamp: '0xffffffffffffffff', // Irrelevant for this attestation type
       requestBody: fixedRequest.requestBody,
       responseBody: responseBodyObj,
-    }
+    };
     const attResponse = new IJsonApi_Response(attResponseParams);
 
     // construct final result
-    const result = new AttestationResponse<IJsonApi_Response>();
     result.response = attResponse;
-
-    return result
+    result.status = AttestationResponseStatus.VALID;
+    return result;
   }
 }

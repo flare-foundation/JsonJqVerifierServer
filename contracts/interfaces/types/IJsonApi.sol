@@ -11,8 +11,8 @@ pragma solidity >=0.7.6 <0.9;
  * the `postprocessJq` states. The structure of the final json is written in the `abi_signature`.
  *
  * The response contains an abi encoding of the final data.
- * @custom:lut `blockTimestamp`
- * @custom:lut-limit `blockTimestamp`
+ * @custom:lut `0xffffffffffffffff`
+ * @custom:lut-limit `0xffffffffffffffff`
  */
 interface IJsonApi {
     /**
