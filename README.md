@@ -6,6 +6,11 @@
 
 This repo contains a verifier server that supports the [JsonApi](./contracts/interfaces/types/IJsonApi.sol) type.
 
+## What can I do with JsonApi attestation type
+
+A user provides an url, jq filter to process the acquired json from the url, and an abi to encode the processed json.
+The encoded json can be used by a smart contract as a struct whose abi matches the abi that was used for the encoding.
+
 # Getting started
 
 We use [Yarn](https://yarnpkg.com/) for package management.
