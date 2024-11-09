@@ -35,13 +35,13 @@ yarn build
 To build an image run
 
 ```zsh
-docker build -t library/verifier-indexer-api-JsonApi -f server/IJsonApi/Dockerfile .
+docker build -t library/verifier-indexer-api-jsonapi -f server/IJsonApi/Dockerfile .
 ```
 
 To start the server run and expose the server on <PORT> run.
 
 ```zsh
-docker run --rm --publish <PORT>:8000  library/verifier-indexer-api--JsonApi
+docker run --rm --publish <PORT>:8000  library/verifier-indexer-api-jsonapi
 ```
 
 ## Verification contract
