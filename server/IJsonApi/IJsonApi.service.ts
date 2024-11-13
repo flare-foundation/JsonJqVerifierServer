@@ -46,10 +46,16 @@ export class IJsonApiVerifierService extends BaseVerifierService<
 
     // axios get data
     await axios
-      .get(url)
+      .get(url,
+        {
+          headers: {
+            'Authorization': 'Bearer ' + process.env.TWITTER_API_KEY,
+          },
+        }
+      )
       .then((response) => {
         responseData = response['data'];
-        console.log(responseData);
+        console.log(JSON.stringify(responseData));
       })
       .catch((error) => {
         console.error(error);
